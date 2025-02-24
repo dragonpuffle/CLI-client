@@ -17,10 +17,11 @@ class HttpRequest:
         headers_str = '\r\n'.join(f'{k}: {v}' for k, v in self.headers.items())
 
         request = (
-            f'{self.method} {self.path} HTTP/1.1\r\n'
+            f'{self.method} {self.path}\r\n'
             f'{headers_str}\r\n\r\n'
             f'{body_json}'
         )
+
         return request.encode()
 
     @classmethod
@@ -92,9 +93,9 @@ class HttpClient:
         self.host, self.port = self.parse_url(base_url)
 
     def parse_url(self, url: str):
-        parts = url.replace('http://', '').split(':')
-        host = parts[0]
-        port = int(parts[1])
+        parts = url.split(':')
+        host = parts[1][2:]
+        port = int(parts[2])
         return host, port
 
     def post(self, path: str, body: dict, headers: Dict[str, str]) -> str:

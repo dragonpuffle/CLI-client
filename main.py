@@ -12,3 +12,4 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     response = send_msg(args.sender, args.recipient, args.msg)
+    # python main.py --sender 89036666666 --recipient 89995676435 --msg 'hello'
