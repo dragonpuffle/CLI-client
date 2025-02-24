@@ -1,0 +1,6 @@
+[server]
+url = 'http://localhost:4010'
+
+[auth]
+username = 'user'
+password = 'password'
