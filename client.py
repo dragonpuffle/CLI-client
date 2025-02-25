@@ -1,7 +1,6 @@
 import json
 import socket
-import base64
-from typing import Dict, Self
+from typing import Dict, Self, Tuple
 
 
 class HttpRequest:
@@ -14,10 +13,10 @@ class HttpRequest:
     def to_bytes(self) -> bytes:
         body_json = json.dumps(self.body)
         self.headers['Content-Length'] = str(len(body_json))
-        headers_str = '\r\n'.join(f'{k}: {v}' for k, v in self.headers.items())
+        headers_str = '\r\n'.join(f'{key}: {val}' for key, val in self.headers.items())
 
         request = (
-            f'{self.method} {self.path}\r\n'
+            f'{self.method} {self.path} HTTP/1.1\r\n'
             f'{headers_str}\r\n\r\n'
             f'{body_json}'
         )
@@ -27,21 +26,14 @@ class HttpRequest:
     @classmethod
     def from_bytes(cls, binary_data: bytes) -> Self:
         text = binary_data.decode()
-        lines = text.split('\r\n')
+        split_other_body = text.split('\r\n\r\n', 1)
 
-        method, path, _ = lines[0].split(' ')
-        headers = {}
-        body = {}
+        other = split_other_body[0].split('\r\n')
+        method, path, _ = other[0].split(' ', 2)
+        headers = {key: val for key, val in (line.split(': ', 1) for line in other[1:])}
 
-        i = 1
-        while i < len(lines) and lines[i]:
-            key, value = lines[i].split(': ', 1)
-            headers[key] = value
-            i += 1
-
-        if 'Content-Length' in headers:
-            body_json = lines[-1]
-            body = json.loads(body_json)
+        body_json = split_other_body[1] if len(split_other_body) > 1 else {}
+        body = json.loads(body_json) if int(headers['Content-Length']) > 0 else {}
 
         return cls(method, path, headers, body)
 
@@ -55,10 +47,10 @@ class HttpResponse:
     def to_bytes(self) -> bytes:
         body_json = json.dumps(self.body)
         self.headers['Content-Length'] = str(len(body_json))
-        headers_str = '\r\n'.join(f'{k}: {v}' for k, v in self.headers.items())
+        headers_str = '\r\n'.join(f'{key}: {val}' for key, val in self.headers.items())
 
         response = (
-            f'{self.status_code} OK\r\n'
+            f'HTTP/1.1 {self.status_code} OK\r\n'
             f'{headers_str}\r\n\r\n'
             f'{body_json}'
         )
@@ -67,22 +59,15 @@ class HttpResponse:
     @classmethod
     def from_bytes(cls, binary_data: bytes) -> Self:
         text = binary_data.decode()
-        lines = text.split('\r\n')
+        split_other_body = text.split('\r\n\r\n', 1)
 
-        _, status_code, _ = lines[0].split(' ', 2)
-        status_code = int(status_code)
-        headers = {}
-        body = {}
+        other = split_other_body[0].split('\r\n')
+        status_line = other[0].split(' ', 2)
+        status_code = int(status_line[1])
+        headers = {key: val for key, val in (line.split(': ', 1) for line in other[1:])}
 
-        i = 1
-        while i < len(lines) and lines[i]:
-            key, value = lines[i].split(': ', 1)
-            headers[key] = value
-            i += 1
-
-        if 'Content-Length' in headers:
-            body_json = lines[-1]
-            body = json.loads(body_json)
+        body = split_other_body[1] if len(split_other_body) > 1 else {}
+        body = json.loads(body) if int(headers['Content-Length']) > 0 else {}
 
         return cls(status_code, headers, body)
 
@@ -92,7 +77,7 @@ class HttpClient:
         self.base_url = base_url
         self.host, self.port = self.parse_url(base_url)
 
-    def parse_url(self, url: str):
+    def parse_url(self, url: str) -> Tuple[str, int]:
         parts = url.split(':')
         host = parts[1][2:]
         port = int(parts[2])
@@ -103,10 +88,13 @@ class HttpClient:
         request_bytes = request.to_bytes()
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect((self.host, self.port))
-            s.sendall(request_bytes)
+            try:
+                s.connect((self.host, self.port))
+                s.sendall(request_bytes)
 
-            response_bytes = s.recv(1024)
-            response = HttpResponse.from_bytes(response_bytes)
+                response_bytes = s.recv(1024)
+                response = HttpResponse.from_bytes(response_bytes)
+            except Exception as e:
+                return json.dumps({'error': f'Connection failed - {e}'}, indent=2)
 
         return json.dumps(response.body, indent=2)

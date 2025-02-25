@@ -1,0 +1,15 @@
+2025-02-25 21:10:18,941 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-25 21:10:18,954 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-25 22:06:52,153 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-25 22:06:52,164 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-25 22:06:59,283 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-25 22:06:59,293 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
