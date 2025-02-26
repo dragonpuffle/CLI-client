@@ -13,3 +13,38 @@
   "status": "success",
   "message_id": "123456"
 }
+2025-02-26 13:01:48,093 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 13:01:48,147 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-26 13:09:10,519 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 13:09:10,533 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-26 14:10:45,907 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 14:10:45,927 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-26 14:11:25,056 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 14:11:25,069 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-26 14:43:27,300 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 14:43:27,314 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-26 14:46:19,373 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 14:46:19,398 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-26 14:48:02,806 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 14:48:02,818 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}

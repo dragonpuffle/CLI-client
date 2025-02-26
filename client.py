@@ -46,9 +46,7 @@ class HttpResponse:
 
     def to_bytes(self) -> bytes:
         body_json = json.dumps(self.body)
-        self.headers['Content-Length'] = str(len(body_json))
         headers_str = '\r\n'.join(f'{key}: {val}' for key, val in self.headers.items())
-
         response = (
             f'HTTP/1.1 {self.status_code} OK\r\n'
             f'{headers_str}\r\n\r\n'
@@ -65,7 +63,7 @@ class HttpResponse:
         status_line = other[0].split(' ', 2)
         status_code = int(status_line[1])
         headers = {key: val for key, val in (line.split(': ', 1) for line in other[1:])}
-
+        print(headers)
         body = split_other_body[1] if len(split_other_body) > 1 else {}
         body = json.loads(body) if int(headers['Content-Length']) > 0 else {}
 
@@ -86,14 +84,15 @@ class HttpClient:
     def post(self, path: str, body: dict, headers: Dict[str, str]) -> str:
         request = HttpRequest('POST', path, headers, body)
         request_bytes = request.to_bytes()
-
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             try:
                 s.connect((self.host, self.port))
                 s.sendall(request_bytes)
 
                 response_bytes = s.recv(1024)
+                print('------------------',response_bytes)
                 response = HttpResponse.from_bytes(response_bytes)
+                print('------------------',response)
             except Exception as e:
                 return json.dumps({'error': f'Connection failed - {e}'}, indent=2)
 
