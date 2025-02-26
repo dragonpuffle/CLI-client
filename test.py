@@ -120,7 +120,7 @@ class TestHttpClient:
     def test_post(self):
         # if the sever is on
         client = HttpClient(self.server_url)
-        response = client.post('/send_sms', self.request_body, self.headers)
+        response = client.post(self.path, self.request_body, self.headers)
         assert response == '{\n  "status": "success",\n  "message_id": "123456"\n}'
 
 
