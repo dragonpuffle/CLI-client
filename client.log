@@ -48,3 +48,22 @@
   "status": "success",
   "message_id": "123456"
 }
+2025-02-26 18:22:20,649 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 18:22:22,660 - INFO - Client got a response from server: {
+  "error": "Connection failed - [WinError 10061] \u041f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435 \u043d\u0435 \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d\u043e, \u0442.\u043a. \u043a\u043e\u043d\u0435\u0447\u043d\u044b\u0439 \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440 \u043e\u0442\u0432\u0435\u0440\u0433 \u0437\u0430\u043f\u0440\u043e\u0441 \u043d\u0430 \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u0435"
+}
+2025-02-26 19:50:03,812 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 19:50:03,823 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-26 19:50:20,914 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 19:50:20,925 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}
+2025-02-26 19:50:45,695 - INFO - Sender 89036666666 sent to recipient 89995676435 msg hello
+2025-02-26 19:50:45,705 - INFO - Client got a response from server: {
+  "status": "success",
+  "message_id": "123456"
+}

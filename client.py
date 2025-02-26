@@ -63,7 +63,6 @@ class HttpResponse:
         status_line = other[0].split(' ', 2)
         status_code = int(status_line[1])
         headers = {key: val for key, val in (line.split(': ', 1) for line in other[1:])}
-        print(headers)
         body = split_other_body[1] if len(split_other_body) > 1 else {}
         body = json.loads(body) if int(headers['Content-Length']) > 0 else {}
 

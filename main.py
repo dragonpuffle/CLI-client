@@ -16,5 +16,6 @@ if __name__ == '__main__':
     LOGGER.info(f'Sender {args.sender} sent to recipient {args.recipient} msg {args.msg}')
     response = send_msg(args.sender, args.recipient, args.msg)
     LOGGER.info(f'Client got a response from server: {response}')
+    print(response)
 
     # python main.py --sender 89036666666 --recipient 89995676435 --msg 'hello'
