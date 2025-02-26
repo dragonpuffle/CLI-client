@@ -90,9 +90,7 @@ class HttpClient:
                 s.sendall(request_bytes)
 
                 response_bytes = s.recv(1024)
-                print('------------------',response_bytes)
                 response = HttpResponse.from_bytes(response_bytes)
-                print('------------------',response)
             except Exception as e:
                 return json.dumps({'error': f'Connection failed - {e}'}, indent=2)
 
